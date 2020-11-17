@@ -1,24 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Records from './components/Records';
+import Title from './components/Title';
 
 function App() {
+
+  const [records, setRecords] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
+      .then((response) => response.json())
+      .then((result) => setRecords(result), console.log('result', records));
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
+      <Title/>
+      <Records records={records}/>
     </div>
   );
 }
